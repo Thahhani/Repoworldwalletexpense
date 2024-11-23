@@ -1,0 +1,10 @@
+body{
+    background-image: url('https://wallpaperbat.com/img/753047-watercolour-aesthetic-wallpaper-top-free-watercolour-aesthetic-background.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    backdrop-filter: blur(6px);
+}
+.container{
+    margin-top: 250px;
+}

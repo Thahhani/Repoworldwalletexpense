@@ -1,0 +1,35 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'CSS/regiester.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <form>
+        <div class="card">
+            <h1>Sign Up</h1>
+            <div class="q"> Already registered?
+                <a href="login.html"><u>Sign in</u></a>
+           </div>
+           
+        <i class="fa-regular fa-user"></i>
+        <input type="text" placeholder="Restaurant Name" ><br>
+        <i class="fa-regular fa-user"></i>
+        <input type="text" placeholder="Place"><br>
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" placeholder="Email"><br>
+        <i class="fa-solid fa-phone"></i>
+        <input type="text" placeholder="Phone">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" placeholder="User Name">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" placeholder="Password"><br>
+        <button type="submit" class="bt">Register</button><div>
+
+    </div>
+</form>
+</body>
+</html>

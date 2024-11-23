@@ -1,0 +1,43 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'ROOMCSS/review.css' %}">
+
+
+<style>
+    label{
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+    <div class="card">
+
+
+
+        <h1>Rating and Review</h1>
+       
+        <div class="star-rating">
+            <label>Rating</label>
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5" class="star">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4" class="star">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3" class="star">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2" class="star">&#9733;</label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1" class="star">&#9733;</label>
+    </div>
+        <label>Review</label>
+        <input type="text"/><br><br>
+            <button class="shadow-button">SUBMIT</button>     
+        </div>
+    
+</body>
+</html>

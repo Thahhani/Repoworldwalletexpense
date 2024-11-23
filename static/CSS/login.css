@@ -1,0 +1,63 @@
+*{
+
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+body{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    background-image: url('/static/image/travel-concept-with-worldwide-landmarks.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    backdrop-filter: blur(6px);
+}
+.main{
+    height: 280px;
+    width: 300px;
+    background-color:rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+}
+.btn{
+    margin-left: 100px;
+    margin-top: 20px;
+    height: 25px;
+    width: 65px;
+}
+input{
+    width: 280px;
+    border-radius: 6px;
+    height: 30px;
+    margin-left: 10px;
+}
+h1{
+    margin-left: 85px;
+}
+label{
+    margin-left: 10px;
+}
+.btn:hover{
+    background-color: blue;
+}
+.abc{
+    margin-left: 80px;
+    
+}
+.c{
+    margin-left: 50px;
+}
+.img{
+    margin-left: 100px;
+    margin-top: 20px;
+}
+.f{
+    margin-left: 150px;
+    margin-bottom:10px;
+    
+}
+
+

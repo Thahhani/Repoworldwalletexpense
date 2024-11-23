@@ -1,0 +1,34 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"  href="{% static 'CSS/login.css' %}" >
+</head>
+<body >
+    
+    <from>
+        <div class="main">
+        <h1>LOGIN</h1>
+       <label >User</label>
+        <input type="text"><br>
+        <label>password</label>
+        <input type="password">
+        <button type="submit" class="btn">LOGIN</button><div>
+        <a href="resetpassword.html" class="abc"><u>Forgot password?</u></a></div>
+        <div class="c"> Don't have account?
+        <a href="regiester.html"><u>Sign up</u></a>
+        </div>
+        <div class="img">
+        <a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Faccounts.google.com%2F&followup=https%3A%2F%2Faccounts.google.com%2F&ifkv=ARpgrqc8tlcd5oT4q7nt_PSjAlfNN2QLcs9kTptUGdCNlRFW0EBrqzxNeAJ3U8enVfhz_KicG-r9&passive=1209600&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S269139653%3A1727851626141699&ddm=0">
+        <img src="{% static 'image/goo-removebg-preview.png' %}" width="50px" height="30px"  >
+        </a>
+        <a href="https://www.facebook.com/">
+        <img src="{% static 'image/Facebook-Logosu-removebg-preview.png' %}" width="50px" height="30px">
+        </a>
+        </div>
+    </div>
+    </from>
+</body>
+</html>

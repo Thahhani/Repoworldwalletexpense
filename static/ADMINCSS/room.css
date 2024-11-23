@@ -1,0 +1,10 @@
+body{
+    background-image: url('https://wallpaperbat.com/img/109546-download-teal-watercolour-wallpaper.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    backdrop-filter: blur(6px);
+}
+.container{
+    margin-top: 300px;
+}

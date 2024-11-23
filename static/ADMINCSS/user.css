@@ -1,0 +1,10 @@
+body{
+    background-image: url('https://wallpaperbat.com/img/579197-watercolor-wallpaper.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat:no-repeat ;
+    backdrop-filter: blur(6px);
+}
+.container{
+    margin-top: 300px;
+}

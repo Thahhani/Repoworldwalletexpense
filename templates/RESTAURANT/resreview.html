@@ -1,0 +1,105 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+<style>
+    label{
+        margin-top: 20px;
+    }
+    .card{
+    padding:10px;
+    width: 320px;
+    height: 250px;
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 150px;
+    background-color:rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+}
+
+.shadow-button{
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 2px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0.2);
+    margin-left: 145px;
+    margin-top: 20px;
+    height: 25px;
+    width: 65px;
+    border-radius: 5px;
+}
+.shadow-button:hover{
+    box-shadow:0 2px 6px rgba(0,0,0.4);
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+.star-rating { 
+    
+    /* display: inline; */
+direction: ltr; 
+ /* display: flex;
+    border: 1px solid grey;
+    gap: 15px;  */
+    /* display: flex; */
+  
+    
+}
+
+.star {
+    font-size: 40px; /* Size of stars */
+    color: lightgray; /* Default color */
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    display: none; /* Hide radio buttons */
+}
+
+input[type="radio"]:checked ~ .star {
+    color: gold; /* Color for checked stars */
+}
+
+input[type="radio"]:hover ~ .star,
+input[type="radio"]:hover ~ input[type="radio"]:checked ~ .star {
+    color: gold; /* Color for hover stars */
+}
+
+</style>
+</head>
+<body>
+
+    <div class="card">
+
+
+
+        <h1>Rating and Review</h1>
+       
+        <div class="star-rating">
+            <label>Rating</label>
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5" class="star">&#9733;</label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4" class="star">&#9733;</label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3" class="star">&#9733;</label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2" class="star">&#9733;</label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1" class="star">&#9733;</label>
+    </div>
+        <label>FEEDBACK</label>
+        <input type="text"/><br><br>
+            <button class="shadow-button">SUBMIT</button>     
+        </div>
+    
+</body>
+</html>
