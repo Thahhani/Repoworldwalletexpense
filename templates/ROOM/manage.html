@@ -37,19 +37,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/HomeR">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="manage.html">Manage Room</a>
+                        <a class="nav-link" href="/Manage">Manage Room</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="viewbooking.html">Bookings</a>
+                        <a class="nav-link" href="/viewroom">viewroom</a>
+                      </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Viewbooking">Bookings</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-primary" href="review.html">Review</a>
+                        <a class="nav-link " href="/Review">Review</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="send.html">Complaint</a>
+                        <a class="nav-link" href="/Send">Complaint</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -61,14 +64,15 @@
 
     <div class="card mt-5">
         <h1 class="text-center">Add and Manage Room</h1>
-        <form>
+        <form action="" method="post">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="roomNumber" class="form-label">Room Number</label>
-                <input type="text" class="form-control" id="roomNumber" required>
+                <input type="text" class="form-control" id="roomNumber" name="roomnumber" required>
             </div>
             <div class="mb-3">
                 <label for="roomType" class="form-label">Room Type</label>
-                <select class="form-select" id="roomType" required>
+                <select class="form-select" id="roomType" name="roomtype"required>
                     <option value="">Choose...</option>
                     <option value="double">Double</option>
                     <option value="single">Single</option>
@@ -77,7 +81,7 @@
             </div>
             <div class="mb-3">
                 <label for="bedType" class="form-label">Bed Type</label>
-                <select class="form-select" id="bedType" required>
+                <select class="form-select" id="bedType" name="bedtype" required>
                     <option value="">Choose...</option>
                     <option value="king">King</option>
                     <option value="queen">Queen</option>
@@ -86,17 +90,17 @@
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" id="price" required>
+                <input type="text" class="form-control" id="price" name="price" required>
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
-                <input type="text" class="form-control" id="status" required>
+                <input type="text" class="form-control" id="status" name="status" required>
             </div>
             <div class="mb-3">
                 <label for="roomService" class="form-label">Room Service</label>
-                <input type="text" class="form-control" id="roomService" required>
+                <input type="text" class="form-control" id="roomService" name="roomservice" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+            <button type="submit" class="btn btn-primary btn-submit">Add</button>
         </form>
     </div>
 

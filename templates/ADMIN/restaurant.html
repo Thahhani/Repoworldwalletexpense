@@ -18,29 +18,25 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="room.html">Room Reservation</a>
+                <a class="nav-link" href="/room">Room Reservation</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="restaurant.html">Restaurant</a>
+                <a class="nav-link" href="/restaurant">Restaurant</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="/user">user</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-primary" href="#">Chat Bot</a>
+                <a class="nav-link" href="/booking">Booking</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="user.html">user</a>
+                <a class="nav-link" href="/complaint">Complaint</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="booking.html">Booking</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="complaint.html">Complaint</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li> 
+              
             
             </ul>
           </div>
@@ -54,22 +50,33 @@
             <th scope="col"> Name</th>
             <th scope="col">Address</th>
             <th scope="col">Phone Number</th>
-            <th scope="col">rating</th>  
+            <th scope="col">rating</th>
+            <!-- <th scope="col">status</th>   -->
             <th colspan="5"></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><button type="submit" class="btn btn-primary">Accept</button>
-                <button type="submit" class="btn btn-danger" > Reject</td>
-            </button>
-          </tr>
+          {% if val|length == 0 %}
+            <tr>
+              <td colspan="5" class="text-center">No restaurants to verify</td>
+            </tr>
+          {% else %}
+            {% for i in val %}
+              <tr>
+                <td>{{ i.restaurantname }}</td>
+                <td>{{ i.place }}</td>
+                <td>{{ i.phoneno }}</td>
+                <td>{{ i.email }}</td>
+                <td>
+                  <a href="/acceptrest/{{ i.id }}" class="btn btn-primary">Accept</a>
+                  <a href="/rejectrest/{{ i.id }}"><button type="submit" class="btn btn-danger">Reject</button>
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          {% endif %}
         </tbody>
+        
       </table>
     </div>
     

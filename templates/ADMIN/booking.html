@@ -17,29 +17,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+            <a class="nav-link active" aria-current="page" href="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="room.html">Room Reservation</a>
+            <a class="nav-link" href="/room">Room Reservation</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="restaurant.html">Restaurant</a>
+            <a class="nav-link" href="/restaurant">Restaurant</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/user">user</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="#">Chat Bot</a>
+            <a class="nav-link" href="/booking">Booking</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="user.html">user</a>
+            <a class="nav-link" href="/complaint">Complaint</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="booking.html">Booking</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="complaint.html">Complaint</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li> 
+           
         
         </ul>
       </div>
@@ -49,20 +45,23 @@
             <table class="table table-warning">
                 <thead>
                   <tr>
+                    <th scope="col">Username</th>
                     <th scope="col">Booking status</th>
-                    <th scope="col">cheking Date</th>
-                    <th scope="col">chekout date</th>
-                    <th colspan="4"></th>
+                    <th scope="col">checking Date</th>
+                    <th scope="col">checkout date</th>
+                    <th colspan="5"></th>
                   </tr>
                 </thead>
                 <tbody>
+                  {%for i in r%}
                   <tr>
-                    
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{i.USERID.Name}}</td>
+                    <td>{{i.bookingstatus}}</td>
+                    <td>{{i.checkindate}}</td>
+                    <td>{{i.checkoutdate}}</td>
                     <td></td>
                   </tr>
+                  {%endfor%}
                 </tbody>
               </table>
             </div>

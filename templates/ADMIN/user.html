@@ -17,30 +17,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+            <a class="nav-link active" aria-current="page" href="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="room.html">Room Reservation</a>
+            <a class="nav-link" href="/room">Room Reservation</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="restaurant.html">Restaurant</a>
+            <a class="nav-link" href="/restaurant">Restaurant</a>
+          </li>
+         
+          <li class="nav-item">
+            <a class="nav-link" href="/user">user</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="#">Chat Bot</a>
+            <a class="nav-link" href="/booking">Booking</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="user.html">user</a>
+            <a class="nav-link" href="/complaint">Complaint</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="booking.html">Booking</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="complaint.html">Complaint</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li> 
-        
+         
         </ul>
       </div>
     </div>
@@ -51,22 +46,32 @@
               <tr>
                 <th scope="col">Guest Name</th>
                 <th scope="col">Phone Number</th>
-                <th scope="col">Email</th>
                 <th scope="col">Place</th>
+              
+
                 <th colspan="4"></th>
               </tr>
             </thead>
             <tbody>
+              {% if val|length == 0 %}
+            <tr>
+              <td colspan="5" class="text-center">No users to verify</td>
+            </tr>
+          {% else %}
+              {% for i in u %}
               <tr>
                 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><button type="submit" class="btn btn-primary">Accept</button>
-                    <button type="submit" class="btn btn-danger" >reject</td>
-                </button>
+                <td>{{i.Name}}</td>
+                <td>{{i.phone}}</td>
+                <td>{{i.place}}</td>
+               
+
+                <td><a href="/acceptuser/{{i.id}}"class="btn btn-primary">Accept</a>
+                  <a href="/rejectuser/{{i.id}}"> <button type="submit" class="btn btn-danger" > Reject</td>
+                </button></a>
               </tr>
+              {% endfor %}
+              {%endif%}
             </tbody>
           </table>
         </div>

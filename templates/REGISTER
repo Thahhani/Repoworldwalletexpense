@@ -1,4 +1,3 @@
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,6 +13,11 @@
             <div class="q"> Already registered?
                 <a href="login.html"><u>Sign in</u></a>
            </div>
+           <select class="form-select" aria-label="Default select example">
+            <option selected>MAKE A CHOICE</option>
+            <option value="1">Hotel</option>
+            <option value="2">Register</option>
+          </select>
            
         <i class="fa-regular fa-user"></i>
         <input type="text" placeholder="Restaurant Name" ><br>
