@@ -6,6 +6,8 @@ from world_wallet_expence_app.views import *
 
 urlpatterns = [
     path('',Login.as_view(),name='Login'),
+    path('',Logout.as_view(),name='Logout'),
+
     #////////////////////admin//////////////////
     path('booking',Booking.as_view(),name='booking'),
     path('complaint/', Complaint.as_view(), name='complaint'),

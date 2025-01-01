@@ -53,7 +53,7 @@ class RestaurantTable(models.Model):
      email=models.CharField(max_length=20, null=True,blank=True)
 
 class RoomComplaintTable(models.Model):
-     USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
+     LOGINID=models.ForeignKey(LoginTable, on_delete=models.CASCADE)
      complaint=models.CharField(max_length=20, null=True,blank=True)
      reply=models.CharField(max_length=20, null=True,blank=True)
      created_at=models.DateField(auto_now_add=True)

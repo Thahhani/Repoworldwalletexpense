@@ -7,6 +7,13 @@ from django.contrib import messages
 from world_wallet_expence_app.form import *
 
 from .models import *
+from rest_framework.views import APIView
+from rest_framework.status import *
+from rest_framework import status
+from rest_framework.response import Response
+from .serializer import *
+
+
 
 # Create your views here.
 class Login(View):
@@ -62,7 +69,9 @@ class Login(View):
             # If no matching user is found
             return HttpResponse('''<script>alert("Invalid credentials. Please try again.");window.location="/login"</script>''')
 
- 
+class Logout(View):
+    def get(self, request):
+        return render(request, "login.html")
         
 
 
@@ -80,7 +89,7 @@ class Home(View):
         return render(request,"ADMIN/home.html")
 class Restaurant(View):
     def get(self,request):
-        obj=RestaurantTable.objects.filter(LOGINID__Type='pending')
+        obj=RestaurantTable.objects.filter(LOGINID__status='pending')
         return render(request,"ADMIN/restaurant.html",{'val':obj})
 class Accept_Restaurant(View):
     def get(self,request,r_id):
@@ -104,7 +113,7 @@ class Booking(View):
         
 class Complaint(View):
     def get(self, request):
-        u = RoomComplaintTable.objects.all()
+        u=RoomComplaintTable.objects.filter(LOGINID__Type='room')
         f = RestaurantComplaintTable.objects.all()
         return render(request, "ADMIN/complaint.html", {'f': f,'u':u})
     
@@ -126,7 +135,8 @@ class Room(View):
 
 class User(View):
     def get(self,request):
-        u=UserTable.objects.filter(LOGINID__Type='pending')
+        u=UserTable.objects.filter(LOGINID__status='pending')
+        print(u)
         return render(request,"ADMIN/user.html",{'u':u})
 class Accept_User(View):
     def get(self,request,u_id):
@@ -164,7 +174,9 @@ class Register(View):
             login_obj = LoginTable()
             login_obj.Username = username
             login_obj.Password = Password
-            login_obj.Type = 'Hotel'
+            login_obj.Type = 'Room'
+            login_obj.status = "pending"
+
             login_obj.save()
             obj = RestaurantTable()
             obj.name=name
@@ -179,6 +191,8 @@ class Register(View):
             login_obj.Username = username
             login_obj.Password = Password
             login_obj.Type = 'Restaurant'
+            login_obj.status = "pending"
+
             login_obj.save()
             obj = RestaurantTable()
             obj.name=name
@@ -249,8 +263,8 @@ class Resreview(View):
     
 class Viewfood(View):
     def get(self,request):
-        
-         return render(request,"RESTAURANT/viewfood.html")
+        v = OrderitemTable.objects.all()
+        return render(request,"RESTAURANT/viewfood.html",{'v':v})
 class Viewuser(View):
     def get(self,request):
          u = UserTable.objects.all()
@@ -356,5 +370,56 @@ class Viewbooking(View):
     def get(self,request):
         obj=BookingTable.objects.all()
         return render(request,"ROOM/viewbooking.html",{'val':obj})
+
+    # ///////////////////////////////////////// API ////////////////////////////////////////////////////////
+
+
+class LoginPage(APIView):
+    def post(self, request):
+        response_dict = {}
+
+        # Get data from the request
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        # Validate input
+        if not username or not password:
+            response_dict["message"] = "failed"
+            return Response(response_dict, status=HTTP_400_BAD_REQUEST)
+
+        # Fetch the user from LoginTable
+        t_user = LoginTable.objects.filter(Username=username,Password=password).first()
+
+        if not t_user:
+            response_dict["message"] = "failed"
+            return Response(response_dict, status=HTTP_401_UNAUTHORIZED)
+
+        # Check password using check_password
+        response_dict["message"] = "success"
+        response_dict["login_id"] = t_user.id
+
+        return Response(response_dict, status=HTTP_200_OK)
+    
+class UserReg(APIView):
+    def post(self,requset):
+        print(request.data)
+        user_serial = UserSerializer(data=request.data)
+        Login_serial =LoginSerializer(data=request.data)
+        data_valid = user_serial.is_valid()
+        login_valid = Login_serial.is_valid()
+
+        if data_valid and login_valid:
+            password = request.data['password']
+            login_profile = Login_serial.save(user_type='USER', password=password)
+            user_serial.save(LOGIN=login_profile)
+            return Response(user_serial.data, status=status.HTTP_201_CREATED)
+        return Response({'login_error': Login_serial.errors if not login_valid else None,
+                         'user_error': user_serial.error if not data_valid else None},status=status.HTTP_400_BAD_REQUEST)
+class viewrestaurant(APIView):
+    def get(self,request):
+        restaurant = RestaurantTable.objects.all()
+        restaurant_serializer = RestaurantSerializer(restaurant,many = True)
+        print(restaurant_serializer)
+        return Response(restaurant_serializer.data)
 
 

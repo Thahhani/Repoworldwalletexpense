@@ -84,20 +84,19 @@
               </tr>
             </thead>
             <tbody>
-              <!-- {%for i in f%} -->
+              {%for i in v%}
               <tr>
                 
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{i.ORDERID.USERID.Name}}</td>
+                <td>{{i.MENUID.foodname}}</td>
+                <td>{{i.quantity}}</td>
+                <td>{{i.ORDERID.USERID.place}}</td>
+                <td>{{i.created_at}}</td>
+                <td>{{i.MENUID.price}}</td>
+                <td>{{i.status}}</td>
+                <td colspan="3"></td>
               </tr>
-              <!-- {%endfor%} -->
+              {%endfor%}
             </tbody>
           </table>
         </div>
