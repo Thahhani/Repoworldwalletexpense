@@ -13,3 +13,19 @@ class RestaurantSerializer(ModelSerializer):
     class Meta:
         model=RestaurantTable
         fields=['name','place','phoneno','email']
+class FoodorderSerializer(ModelSerializer):
+    class Meta:
+        model=OrderitemTable
+        fields=['quantity','created_at',' status']
+class WalletSerializer(ModelSerializer):
+    class Meta:
+        model=WalletTable
+        fields=['Balance']
+class RoomSerializer(ModelSerializer):
+    class Meta:
+        model=RoomTable
+        fields=['roomnumber','roomtype','bedtype','price','roomservice','status']
+class BookingSerializer(ModelSerializer):
+    class Meta:
+        model=BookingTable
+        fields=['bookingstatus','checkindate','checkoutdate','paymentmethod']

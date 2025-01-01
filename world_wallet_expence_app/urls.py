@@ -43,6 +43,16 @@ urlpatterns = [
     path('Send',Send.as_view(),name='Send'),
     path('Send/reply/<int:reply_id>/', Send.as_view(), name='reply_complaint'),
     path('Viewbooking',Viewbooking.as_view(),name='Viewbooking'),
+    #////////////API/////////////////////////////
+    path('LoginPage',LoginPage.as_view(),name='LoginPage'),
+    path('UserReg',UserReg.as_view(),name='UserReg'),
+    path('viewrestaurant',viewrestaurant.as_view(),name='viewrestaurant'),
+    path('viewfoodorder',viewfoodorder.as_view(),name='viewfoodorder'),
+    path('viewwallet',viewwallet.as_view(),name='viewwallet'),
+    path('viewroom',viewroom.as_view(),name='viewroom'),
+    path('viewbooking',viewbooking.as_view(),name='viewbooking'),
+
+
 
     
 ]

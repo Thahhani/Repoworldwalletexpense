@@ -421,5 +421,31 @@ class viewrestaurant(APIView):
         restaurant_serializer = RestaurantSerializer(restaurant,many = True)
         print(restaurant_serializer)
         return Response(restaurant_serializer.data)
+class viewfoodorder(APIView):
+    def get(self,request):
+        foodorder = OrderitemTable.objects.all()
+        foodorder_serializer = FoodorderSerializer(foodorder,many = True)
+        print(foodorder_serializer)
+        return Response(foodorder_serializer.data)
+class viewwallet(APIView):
+    def get(self,request):
+        wallet = WalletTable.objects.all()
+        wallet_serializer = WalletSerializer(wallet,many = True)
+        print(wallet_serializer)
+        return Response(wallet_serializer.data)
+class viewroom(APIView):
+    def get(self,request):
+        room = RoomTable.objects.all()
+        room_serializer = RoomSerializer(room,many = True)
+        print(room_serializer)
+        return Response(room_serializer.data)
+class viewbooking(APIView):
+    def get(self,request):
+        booking = BookingTable.objects.all()
+        booking_serializer = BookingSerializer(booking,many = True)
+        print(booking_serializer)
+        return Response(booking_serializer.data)
+
+
 
 
