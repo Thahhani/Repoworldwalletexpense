@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import *
+from rest_framework import serializers
 
 class UserSerializer(ModelSerializer):
     class Meta:
@@ -12,20 +13,90 @@ class LoginSerializer(ModelSerializer):
 class RestaurantSerializer(ModelSerializer):
     class Meta:
         model=RestaurantTable
-        fields=['name','place','phoneno','email']
+        fields=['name','place','phoneno','email','id']
 class FoodorderSerializer(ModelSerializer):
     class Meta:
         model=OrderitemTable
         fields=['quantity','created_at',' status']
-class WalletSerializer(ModelSerializer):
+
+
+class WalletSerializer(serializers.ModelSerializer):
     class Meta:
-        model=WalletTable
-        fields=['Balance']
+        model = WalletTable
+        fields = ['USERID', 'Balance'] 
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TransactionTable
+        fields = ['USERID', 'amount', 'transactiontype']
+
+
 class RoomSerializer(ModelSerializer):
     class Meta:
         model=RoomTable
-        fields=['roomnumber','roomtype','bedtype','price','roomservice','status']
-class BookingSerializer(ModelSerializer):
+        fields=['id','roomnumber','roomtype','bedtype','price','roomservice','status', 'location', 'roomimage']
+
+class RoomBookingSerializer(serializers.ModelSerializer):
     class Meta:
-        model=BookingTable
-        fields=['bookingstatus','checkindate','checkoutdate','paymentmethod']
+        model = BookingTable
+        fields = ['USERID', 'ROOMID', 'bookingstatus', 'checkindate', 'checkoutdate', 'paymentmethod']
+
+class Rating_FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackTableforRoom
+        fields = ['USERID', 'ROOMID', 'rating', 'feedback']
+
+class FoodRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackTableforRestaurant
+        fields = ['USERID', 'RESTAURANTID', 'MENUID', 'rating', 'feedback']
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['id', 'user', 'sender', 'status','created_at']
+
+class FoodmenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FoodmenuTable
+        fields = ['id', 'RESTAURANTID', 'foodname', 'foodtype', 'description', 'price']
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    MENUID = FoodmenuSerializer()  # Nested serializer to fetch the foodname
+
+    class Meta:
+        model = OrderitemTable
+        fields = ['MENUID', 'quantity', 'created_at', 'status']
+
+# Main serializer for the FoodorderTable
+class FoodOrderSerializer(serializers.ModelSerializer):
+    ORDERID = OrderItemSerializer()  # Nested serializer to include order details and foodname
+
+    class Meta:
+        model = FoodorderTable
+    
+        fields = ['USERID', 'status', 'ORDERID', 'created_at']
+
+class RoomTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomTable
+        fields = '__all__'
+
+class RestaurantTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RestaurantTable
+        fields = '__all__'
+
+class RentedVehicleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RentedVehicleTable
+        fields = '__all__'
+
+class SpotSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpotTable
+        fields = '__all__'
+

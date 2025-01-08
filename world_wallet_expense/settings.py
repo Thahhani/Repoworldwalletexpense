@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-973ovhr01m!ki#l&y4)gn^7ya_1l11s8v^dmbwglqb0j(r+aj@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'world_wallet_expence_app',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

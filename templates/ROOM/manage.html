@@ -43,7 +43,7 @@
                         <a class="nav-link" href="/Manage"> Room</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/viewroom">room</a>
+                        <a class="nav-link" href="/viewRoom">room</a>
                       </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Viewbooking">Bookings</a>
@@ -99,6 +99,15 @@
             <div class="mb-3">
                 <label for="roomService" class="form-label">Room Service</label>
                 <input type="text" class="form-control" id="roomService" name="roomservice" required>
+            </div>
+            <div class="mb-3">
+                <label for="roomimage" class="form-label">Room image</label>
+                <input type="file" class="form-control" id="roomimage" name="roomimage" accept="image/*" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="location" class="form-label">location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
             </div>
             <button type="submit" class="btn btn-primary btn-submit">Add</button>
         </form>

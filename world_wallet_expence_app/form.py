@@ -28,8 +28,24 @@ class foodeditform(ModelForm):
 class manageform(ModelForm):
     class Meta:
         model=RoomTable        
-        fields=['roomnumber','roomtype','bedtype','price','roomservice','status']
+        fields=['roomnumber','roomtype','bedtype','price','roomservice','status','roomimage','location']
 class roomeditform(ModelForm):
     class Meta:
         model=RoomTable        
-        fields=['roomnumber','roomtype','bedtype','price','roomservice','status']
+        fields=['roomnumber','roomtype','bedtype','price','roomservice','status','roomimage','location']
+class rentvehform(ModelForm):
+    class Meta:
+        model=RentedVehicleTable       
+        fields=['location','contactno','vehicletype','rent','description']
+class rentveheditform(ModelForm):
+    class Meta:
+        model=RentedVehicleTable       
+        fields=['location','contactno','vehicletype','rent','description']
+class spotaddform(ModelForm):
+    class Meta:
+        model=SpotTable       
+        fields=['location','placename','description','ticket','ticket_charge']
+class spoteditform(ModelForm):
+    class Meta:
+        model=SpotTable       
+        fields=['location','placename','description','ticket','ticket_charge']

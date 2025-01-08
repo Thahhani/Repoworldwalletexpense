@@ -26,7 +26,7 @@
                         <a class="nav-link" href="/Manage">Manage Room</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/viewroom">viewroom</a>
+                        <a class="nav-link" href="/viewRoom">viewroom</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Viewbooking">Bookings</a>
@@ -54,6 +54,8 @@
             <th scope="col">BED Type</th>
             <th scope="col">Price</th>
             <th scope="col">Status</th>
+            <th scope="col">Image</th>
+
             <th scope="col">Room Service</th>
             <th colspan="5"></th>
            {%for i in val%}
@@ -63,6 +65,7 @@
             <td>{{i.bedtype}}</td>
             <td>{{i.price}}</td>
             <td>{{i.status}}</td>
+            <td><a href="{{i.roomimage.url}}" target="_blank">view</a></td>
             <td>{{i.roomservice}}</td>
             
             <td>                  

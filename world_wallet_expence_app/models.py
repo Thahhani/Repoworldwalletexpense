@@ -31,6 +31,8 @@ class RoomTable(models.Model):
      roomnumber=models.CharField(max_length=20, null=True,blank=True)
      roomtype=models.CharField(max_length=20, null=True,blank=True)
      bedtype=models.CharField(max_length=20, null=True,blank=True)
+     roomimage=models.FileField(upload_to='roomimages/',null=True,blank=True)
+     location=models.CharField(max_length=100,null=True,blank=True)
      price=models.CharField(max_length=20, null=True,blank=True) 
      roomservice=models.CharField(max_length=20, null=True,blank=True)
      status=models.CharField(max_length=25, null=True,blank=True) 
@@ -64,19 +66,6 @@ class RestaurantComplaintTable(models.Model):
      reply=models.CharField(max_length=20, null=True,blank=True)
      created_at=models.DateField(auto_now_add=True)
 
-
-class FeedbackTableforRestaurant(models.Model):
-     USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
-     rating=models.CharField(max_length=20, null=True,blank=True)
-     feedback=models.CharField(max_length=20, null=True,blank=True)
-     RESTAURANTID=models.ForeignKey(RestaurantTable, on_delete=models.CASCADE)
-
-class FeedbackTableforRoom(models.Model):
-     USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
-     rating=models.CharField(max_length=20, null=True,blank=True)
-     feedback=models.CharField(max_length=20, null=True,blank=True)
-     ROOMID=models.ForeignKey(RoomTable, on_delete=models.CASCADE)
-
 class FoodmenuTable(models.Model):
      RESTAURANTID=models.ForeignKey(RestaurantTable, on_delete=models.CASCADE)
      foodname=models.CharField(max_length=20, null=True,blank=True)
@@ -84,19 +73,65 @@ class FoodmenuTable(models.Model):
      description=models.CharField(max_length=100, null=True,blank=True)
      price=models.CharField(max_length=20, null=True,blank=True)
 
-class FoodorderTable(models.Model):
+
+class FeedbackTableforRestaurant(models.Model):
      USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
-     status=models.CharField(max_length=20, null=True,blank=True)
-     created_at=models.DateField(auto_now_add=True)
+     rating=models.CharField(max_length=20, null=True,blank=True)
+     feedback=models.CharField(max_length=20, null=True,blank=True)
+     MENUID=models.ForeignKey(FoodmenuTable, on_delete=models.CASCADE,null=True,blank=True)
+     RESTAURANTID=models.ForeignKey(RestaurantTable, on_delete=models.CASCADE,null=True,blank=True)
+
+class FeedbackTableforRoom(models.Model):
+     USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
+     rating=models.CharField(max_length=20, null=True,blank=True)
+     feedback=models.CharField(max_length=20, null=True,blank=True)
+     ROOMID=models.ForeignKey(RoomTable, on_delete=models.CASCADE)
+     
 
 class OrderitemTable(models.Model):
-     ORDERID=models.ForeignKey(FoodorderTable, on_delete=models.CASCADE)
+     
      MENUID=models.ForeignKey(FoodmenuTable, on_delete=models.CASCADE)
      quantity=models.CharField(max_length=20, null=True,blank=True)
      created_at=models.DateField(auto_now_add=True)
      status=models.CharField(max_length=20, null=True,blank=True)
 
+class FoodorderTable(models.Model):
+     USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE,null=True,blank=True)
+     status=models.CharField(max_length=20, null=True,blank=True)
+     ORDERID=models.ForeignKey(OrderitemTable, on_delete=models.CASCADE,null=True,blank=True)
+     created_at=models.DateField(auto_now_add=True)
+
+
+
 class ExpenseTable(models.Model):
      USERID=models.ForeignKey(UserTable, on_delete=models.CASCADE)
      BOOKINGID=models.ForeignKey(BookingTable, on_delete=models.CASCADE)
      ORDERID=models.ForeignKey(OrderitemTable, on_delete=models.CASCADE)
+
+
+
+
+
+class Notification(models.Model):
+   
+    user = models.ForeignKey(UserTable, on_delete=models.CASCADE, related_name='notifications')
+    sender = models.ForeignKey(LoginTable, on_delete=models.CASCADE, related_name='sent_notifications', null=True, blank=True)
+    status=models.CharField(max_length=20, null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class RentedVehicleTable(models.Model):
+    location = models.CharField(max_length=100, null=True, blank=True)
+    contactno = models.CharField(max_length=15, null=True, blank=True)
+    vehicletype = models.CharField(max_length=50, null=True, blank=True)
+    rent = models.IntegerField(null=True, blank=True) 
+    description = models.TextField(null=True, blank=True) # Changed to IntegerField for numeric queries
+
+class SpotTable(models.Model):
+    location = models.CharField(max_length=100, null=True, blank=True)
+    placename = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    ticket = models.CharField(max_length=10, choices=(('free', 'Free'), ('paid', 'Paid')))
+    ticket_charge = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # For paid spots
+ 
+    
+   

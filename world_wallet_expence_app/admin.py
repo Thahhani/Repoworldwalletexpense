@@ -18,3 +18,7 @@ admin.site.register(FoodmenuTable)
 admin.site.register(FoodorderTable)
 admin.site.register(OrderitemTable)
 admin.site.register(ExpenseTable)
+admin.site.register(Notification)
+admin.site.register(RentedVehicleTable)
+admin.site.register(SpotTable)
+
