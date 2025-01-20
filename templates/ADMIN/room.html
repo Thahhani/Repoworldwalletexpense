@@ -17,67 +17,72 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+            <a class="nav-link active" aria-current="page" href="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="room.html">Room Reservation</a>
+            <a class="nav-link" href="/room">Room Reservation</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="restaurant.html">Restaurant</a>
+            <a class="nav-link" href="/restaurant">Restaurant</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/user">user</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-primary" href="#">Chat Bot</a>
+            <a class="nav-link" href="/booking">Booking</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="user.html">user</a>
+            <a class="nav-link" href="/Rentvehadd">Rent vehicle</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="booking.html">Booking</a>
+            <a class="nav-link" href="/viewrentveh">vehicle</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="complaint.html">Complaint</a>
+            <a class="nav-link" href="/spotadd">Spot Add</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li> 
+            <li class="nav-item">
+                <a class="nav-link" href="/spotview">Spot</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/complaint">Complaint</a>
+          </li>
+          
         
         </ul>
       </div>
     </div>
   </nav>
     <div class="container">
+    <!-- <a href="addpage" class="btn btn-primary">ADD</a>  -->
     <table class="table table-success">
       
         <thead>
           <tr>
-            <th scope="col">Guest Name</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Number of Guest</th>
-            <th scope="col">Arrival Date</th>
-            <th scope="col">Departure Date </th>
+            <th scope="col">Hotel Name</th>
             <th scope="col">Room Number</th>
             <th scope="col">Category Type</th>
             <th scope="col">Price</th>
-            <th scope="col">Status</th>
-            <th colspan="8"></th>
+            <th scope="col">Actions</th>
+            
           </tr>
         </thead>
         <tbody>
+          {%for i in r%}
           <tr>
-            
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><button type="submit" class="btn btn-primary">Edit</button>
-                <button type="submit" class="btn btn-danger" > Delete</td>
-            </button>
-          </tr>
+            <td>{{i.name}}</td>
+            <td>{{i.roomnumber}}</td>
+            <td>{{i.roomtype}}</td>
+            <td>{{i.price}}</td>
+            <!-- <td>{{i.status}}</td> -->
+            <td>
+            <a href="Deleteroomrev/{{i.id}}/" class="btn btn-primary" > DELETE</a>
+             </td>
+            <!-- <tr >
+            <td colspan="10" align="center"><button type="submit" class="btn btn-primary">Add</button></td></tr>
+          </tr>  -->
+          {%endfor%}
         </tbody>
       </table>
     </div>

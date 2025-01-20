@@ -1,0 +1,31 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Room</title>
+</head>
+<body>
+    <h1>Add Room</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="roomNumber">Room Number:</label><br>
+        <input type="text" id="roomNumber" name="roomnumber" required><br><br>
+
+        <label for="categoryType">Category Type:</label><br>
+        <input type="text" id="categoryType" name="type" required><br><br>
+
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price" required><br><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status" required>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="occupied">Occupied</option>
+        </select><br><br>
+
+        <button type="submit">Add Room</button>
+    </form>
+</body>
+</html>

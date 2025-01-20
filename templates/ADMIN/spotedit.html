@@ -1,0 +1,70 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-image: url('https://img.freepik.com/premium-photo/abstract-blurry-restaurant-interior-background-with-empty-wooden-table-mock-up_1028938-340982.jpg?semt=ais_hybrid');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .card {
+            height: auto;
+            width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            opacity: 0.9; 
+        }
+
+        .btn-submit {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="card mt-5">
+        <h1 class="text-center">Add and Manage spot</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location"value="{{val.location}}"  required>
+            </div>
+          
+            
+          
+            
+            <div class="mb-3">
+                <label for="placename" class="form-label">Place Name</label>
+                <input type="text" class="form-control" id="placename" name="placename" value="{{val.placename}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description" value="{{val.description}}" required>
+            </div>
+             <div class="mb-3">
+              <label for="ticket" class="form-label">Ticket</label>
+              <select class="form-select" id="ticket" name="ticket" required>
+                  <option value="">Choose...</option>
+                  <option value="free" {% if val.ticket == "free" %}selected{% endif %}>Free</option>
+                  <option value="paid" {% if val.ticket == "paid" %}selected{% endif %}>Paid</option>
+                 
+              </select>
+          </div>
+            <div class="mb-3">
+                <label for="ticket_charge" class="form-label"> Ticket Charge</label>
+                <input type="text" class="form-control" id="ticket_charge" name="ticket_charge" value="{{val.ticket_charge}}"  required>
+            </div>
+           
+            <button type="submit" class="btn btn-primary btn-submit">Update</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-83zZuLhOItC3/T7V3hLqluWxyMl5DkMkCcjAL3nFsQtQjFj+1+kHD3k6SCD6DqZy" crossorigin="anonymous"></script>
+</body>
+</html>

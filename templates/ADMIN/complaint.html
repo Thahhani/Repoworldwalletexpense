@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
- <link rel="stylesheet" href="complaint.css">
+    <link rel="stylesheet" href="complaint.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -17,56 +17,146 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="room.html">Room Reservation</a>
+                <a class="nav-link" href="/room">Room Reservation</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="restaurant.html">Restaurant</a>
+                <a class="nav-link" href="/restaurant">Restaurant</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-primary" href="#">Chat Bot</a>
+                <a class="nav-link" href="/user">User</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="user.html">user</a>
+                <a class="nav-link" href="/booking">Booking</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="booking.html">Booking</a>
+                <a class="nav-link" href="/Rentvehadd">Complaint</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="complaint.html">Complaint</a>
+                <a class="nav-link" href="/viewrentveh">vehicle</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-              </li> 
-            
+                <li class="nav-item">
+                    <a class="nav-link" href="/spotadd">Spot Add</a>
+                  </li>
+                  <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/spotview">Spot</a>
+                      </li>
+                      <li class="nav-item">
+                <a class="nav-link" href="/complaint">Complaint</a>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
+<h4>ROOM COMPLAINT</h4>
     <div class="container">
-    <table class="table table-success">
-      
-        <thead>
-          <tr>
-            <th scope="col">Complaint</th>
-            <th scope="col">Reply</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            
-            <td></td>
-            <td></td>
-            <td><button type="submit" class="btn btn-primary">Accept</button>
-                <button type="submit" class="btn btn-danger" > Reject</td>
-            </button>
-          </tr>
-        </tbody>
-      </table>
+        <table class="table table-success">
+            <thead>
+                <tr>
+                    <th scope="col">Complaint</th>
+                    <th scope="col">Reply</th>
+                    <th colspan="3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in u %}
+                <tr>
+                    <td>{{i.complaint}}</td>
+                    <td>{{i.reply}}</td>
+                    <td>
+                        <!-- Button trigger modal -->
+                        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{i.id}}">
+                          Reply
+                        </button> -->
+
+                        <!-- Modal -->
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="modal fade" id="modal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Reply</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!-- <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlTextarea1" class="form-label">Type the reply here</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Send</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<br><br>
+<h4>RESTAURANT COMPLAINT</h4>
+<div class="container">
+  <table class="table table-success">
+      <thead>
+          <tr>
+              <th scope="col">Complaint</th>
+              <th scope="col">Reply</th>
+              <th colspan="3"></th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for i in f %}
+          <tr>
+              <td>{{i.complaint}}</td>
+              <td>{{i.reply}}</td>
+              <td>
+                  <!-- Button trigger modal -->
+                  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{i.id}}">
+                    Reply
+                  </button> -->
+
+                  <!-- Modal -->
+                  <form action="" method="post">
+                      {% csrf_token %}
+                      <div class="modal fade" id="modal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h1 class="modal-title fs-5" id="exampleModalLabel">Reply</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <!-- <div class="modal-body">
+                                      <div class="mb-3">
+                                          <label for="exampleFormControlTextarea1" class="form-label">Type the reply here</label>
+                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="reply"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-primary">Send</button>
+                                  </div> -->
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -40,20 +40,26 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="homeRS.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="/HomeRS">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="viewuser.html">View User</a>
+                <a class="nav-link" href="/viewuser">View User</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="add.html">ADD and Manage Food item</a>
+                <a class="nav-link" href="/Add">ADD and Manage Food item</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="viewfood.html">View Food Ordering</a>
+                <a class="nav-link " href="/viewfood">View Food Ordering</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="resreview.html">Send Rating and Review</a>
+                <a class="nav-link " href="/foodview">View Food </a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Resreview">Send Rating and Review</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="/restcomplaint">Complaint</a>
+              </li>  -->
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
               </li> 
@@ -62,23 +68,29 @@
           </div>
         </div>
       </nav>
-    <div class="card mt-5">
-        <h1 class="text-center">View User</h1>
-        <form>
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" required>
-            </div>
-            <div class="mb-3">
-                <label for="Phone" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="Phone" required></div>
-                <div class="mb-3">
-                    <label for="place" class="form-label">Place</label>
-                    <input type="text" class="form-control" id="place" required></div>
-        
-            <button type="submit" class="san btn btn-success">Submit</button>         
-        </form>
-    </div>
-
+      <div class="container mt-5">
+        <table class="table table-success">
+          
+            <thead>
+              <tr>
+                <th scope="col">USER NAME</th>
+                <th scope="col">PHONE</th>
+                <th scope="col">PLACE</th>
+                <th colspan="6"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in u %}
+              <tr>
+                
+                <td>{{i.Name}}</td>
+                <td> {{i.phone}}</td>
+                <td>{{i.place}}</td>
+                <td></td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
 </body>
 </html>

@@ -40,19 +40,22 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="homeRS.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="/HomeRS">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="viewuser.html">View User</a>
+                <a class="nav-link" href="/viewuser">View User</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="add.html">ADD and Manage Food item</a>
+                <a class="nav-link" href="/Add">ADD and Manage Food item</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="viewfood.html">View Food Ordering</a>
+                <a class="nav-link " href="/viewfood">View Food Ordering</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="resreview.html">Send Rating and Review</a>
+                <a class="nav-link " href="/foodview">View Food </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/Resreview">Send Rating and Review</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
@@ -64,17 +67,28 @@
       </nav>
     <div class="card mt-5">
         <h1 class="text-center">Add and Manage Food Item</h1>
-        <form>
+        <form action="" method="post">
+          {% csrf_token %}
             <div class="mb-3">
-                <label for="name" class="form-label">Restaurant Id</label>
-                <input type="text" class="form-control" id="name" required>
+                <label for="name" class="form-label">Food Name</label>
+                <input type="text" class="form-control" id="name" name="foodname" required>
             </div>
             <div class="mb-3">
+              <label for="name" class="form-label">Food Type</label>
+              <select id="name" name="foodtype" required>
+                <option value="vegetarian">vegetarian</option>
+                <option value="Non-veg">Non-veg</option>
+            </select>
+          </div>  
+            <div class="mb-3">
                 <label for="Phone" class="form-label">Price</label>
-                <input type="text" class="form-control" id="Phone" required></div>
-                
-            <button type="submit" class="san btn btn-success">Submit</button>         
-        </form>
+                <input type="text" class="form-control" id="Phone" name="price" required></div>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Description</label>
+                  <input type="text" class="form-control" id="name" name="description" required>
+              </div>   
+            <button type="submit" class="san btn btn-success">ADD</button>          
+            </a></form>
     </div>
 
 </body>

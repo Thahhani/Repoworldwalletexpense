@@ -8,3 +8,9 @@ body{
 .container{
     margin-top: 300px;
 }
+.add{
+    padding: 10px;
+    background-color: green;
+    border-radius: 8px;
+    text-decoration: none;
+}

@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'CSS/regiester.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=location_on" />
+    <style>
+        /* Basic styling for body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        /* Styling the form card */
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            height: 100%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .q {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .q a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .form-input i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .form-input input {
+            padding-left: 30px;
+        }
+
+        button.bt {
+            display: block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 70%;
+            height: 50%;
+            font-size: 16px;
+            border: 1px solid green;
+            /* margin-right: 20%; */
+        }
+
+        button.bt:hover {
+            background-color: #0056b3;
+        }
+        .bi bi-geo-alt{
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %} 
+        <div class="card">
+            <h1>Sign Up</h1>
+            <div class="q">Already registered?
+                <a href="/"><u>Sign in</u></a>
+            </div>
+            <select class="form-select" aria-label="Default select example" name="type">
+                <option selected>MAKE A CHOICE</option>
+                <option value="1">Hotel</option>
+                <option value="2">Restaurant</option>
+            </select>
+
+            <div class="form-input">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" placeholder=" Name" name="name" required><br>
+            </div>
+            
+            <div class="form-input">
+                <i class="material-symbols-outlined">
+                    location_on
+                </i>
+                <input type="text" placeholder="Place" name="Place" required><br>
+            </div>
+            
+            <div class="form-input">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" placeholder="Email" name="Email" required><br>
+            </div>
+
+            <div class="form-input">
+                <i class="fa-solid fa-phone"></i>
+                <input type="text" placeholder="Phone" name="Phone" required><br>
+            </div>
+
+            <div class="form-input">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="User Name" name="UserName" required><br>
+            </div>
+
+            <div class="form-input">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Password" name="Password" required><br>
+            </div>
+
+            <button type="submit" class="bt">Register</button>
+        </div>
+    </form>
+</body>
+</html>

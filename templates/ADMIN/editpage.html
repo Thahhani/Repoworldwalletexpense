@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Room</title>
+</head>
+<body>
+    <h1>Edit Room</h1>
+    <form action="/edit-room" method="POST">
+        <label for="roomNumber">Room Number:</label><br>
+        <input type="text" id="roomNumber" name="roomNumber" value="101" readonly><br><br>
+
+        <label for="categoryType">Category Type:</label><br>
+        <input type="text" id="categoryType" name="categoryType" value="king" required><br><br>
+
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price" value="3000" required><br><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status" required>
+            <option value="pending" selected>Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="occupied">Occupied</option>
+        </select><br><br>
+
+        <button type="submit">Update Room</button>
+    </form>
+</body>
+</html>

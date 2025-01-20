@@ -1,0 +1,62 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   
+    <style>
+        .card {
+         height: auto;
+         width: 500px;
+         margin: auto;
+         padding: 20px;
+         border-radius: 10px;
+         opacity: 0.9; 
+     }
+     body{
+        
+        height: 100vh;
+        align-items: center;
+        background-image: url('https://cache.desktopnexus.com/thumbseg/2084/2084264-bigthumbnail.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat:no-repeat ;
+        backdrop-filter: blur(6px);
+         }
+     .san {
+         width: 100%;
+     }
+ </style>
+</head>
+<body>
+    <div class="card mt-5">
+        <h1 class="text-center">Edit and Manage Food Item</h1>
+        <form action="" method="post">
+            {%csrf_token%}
+            <div class="mb-3">
+                <label for="name" class="form-label">Food Name</label>
+                <input type="text" class="form-control" id="name" value="{{val.foodname}}" name="foodname"required>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Food Type</label>
+                <select id="name" name="foodtype" required>
+                    <option value="vegetarian" {% if val.foodtype == "vegetarian" %}selected{% endif %}>vegetarian</option>
+                    <option value="Non-veg" {% if val.foodtype == "Non-veg" %}selected{% endif %}>Non-veg</option>
+                  </select>
+                  
+            </div>  
+            <div class="mb-3">
+                <label for="Phone" class="form-label">Price</label>
+                <input type="text" class="form-control" id="Phone" value="{{val.price}}" name="price" required></div>
+                <div class="mb-3">
+                  <label for="name" class="form-label">Description</label>
+                  <input type="text" class="form-control" id="name" value="{{val.description}}" name="description" required>
+              </div>   
+            <button type="submit" class="san btn btn-success">Update</button>    
+            </form>
+    </div>
+
+</body>
+</html>
