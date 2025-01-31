@@ -38,7 +38,7 @@ class RoomTable(models.Model):
      roomimage=models.FileField(upload_to='roomimages/',null=True,blank=True)
      location=models.CharField(max_length=100,null=True,blank=True)
      price=models.CharField(max_length=20, null=True,blank=True) 
-     roomservice=models.CharField(max_length=20, null=True,blank=True)
+     roomservice=models.CharField(max_length=100, null=True,blank=True)
      status=models.CharField(max_length=25, null=True,blank=True) 
      name=models.CharField(max_length=100,null=True,blank=True)
  
@@ -60,6 +60,10 @@ class RestaurantTable(models.Model):
      phoneno=models.BigIntegerField(null=True,blank=True)
      email=models.CharField(max_length=20, null=True,blank=True)
 
+     
+     def __str__(self):
+         return self.name
+
 # class RoomComplaintTable(models.Model):
 #      LOGINID=models.ForeignKey(LoginTable, on_delete=models.CASCADE)
 #      complaint=models.CharField(max_length=20, null=True,blank=True)
@@ -74,9 +78,9 @@ class RestaurantTable(models.Model):
 
 class FoodmenuTable(models.Model):
      RESTAURANTID=models.ForeignKey(RestaurantTable, on_delete=models.CASCADE)
-     foodname=models.CharField(max_length=20, null=True,blank=True)
+     foodname=models.CharField(max_length=100, null=True,blank=True)
      foodtype=models.CharField(max_length=20, null=True,blank=True)
-     description=models.CharField(max_length=100, null=True,blank=True)
+     description=models.CharField(max_length=500, null=True,blank=True)
      price=models.CharField(max_length=20, null=True,blank=True)
 
 

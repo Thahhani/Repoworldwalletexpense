@@ -54,7 +54,7 @@ class Login(View):
                  # Store restaurant ID in session
                 
                 return HttpResponse('''<script>alert("Welcome to home");window.location="/home"</script>''')
-            elif login_obj.Type == "room":
+            elif login_obj.Type == "Room":
               print("mmmm",login_obj)
               room = RoomTable.objects.filter(LOGINID=login_obj).first()  # Get the first match or None
               if room:
@@ -69,12 +69,14 @@ class Login(View):
             # Handle user redirection based on the Type (role)
             if login_obj.Type == "admin":
                 return HttpResponse('''<script>alert("Welcome to home");window.location="/home"</script>''')
-            elif login_obj.Type == "room":
+            elif login_obj.Type == "Room":
                 return HttpResponse('''<script>alert("Welcome to home");window.location="/HomeR"</script>''')
 
         except LoginTable.DoesNotExist:
             # If no matching user is found
             return HttpResponse('''<script>alert("Invalid credentials. Please try again.");window.location="/login"</script>''')
+
+
 
 class Logout(View):
     def get(self, request):
@@ -317,10 +319,27 @@ class Add(View):
     
 
             
+# class Foodview(View):
+#     def get(self, request, restaurant_id):
+#         # Use the restaurant_id passed from the URL
+#         obj = FoodmenuTable.objects.filter(restaurant_id=restaurant_id)
+#         return render(request, "RESTAURANT/foodview.html", {'val': obj})
 class Foodview(View):
-    def get(self,request):
-        obj=FoodmenuTable.objects.all()
-        return render(request,"RESTAURANT/foodview.html",{'val':obj})
+    def get(self, request):
+        # Get the restaurant_id from the session
+        restaurant_id = request.session.get("restaurant_id")
+
+        if restaurant_id:
+            # Filter the FoodmenuTable by the restaurant_id (using the foreign key relation)
+            obj = FoodmenuTable.objects.filter(RESTAURANTID__id=restaurant_id)
+        else:
+            # If restaurant_id is not available in session, you can return an empty queryset or handle the error
+            obj = FoodmenuTable.objects.none()  # Empty queryset if not logged in
+
+        return render(request, "RESTAURANT/foodview.html", {'val': obj})
+
+
+
 class Foodedit(View):
     def get(self,request,e_id):
         obj = FoodmenuTable.objects.get(id=e_id)
@@ -416,10 +435,64 @@ class Manage(View):
 
                   
 
+
 class viewRoom(View):
-    def get(self,request):
-         obj=RoomTable.objects.all()
-         return render(request,"ROOM/viewRoom.html",{'val':obj})
+    def get(self, request):
+        # Fetch the hotel LOGINID from the session (set during login)
+        login_id = request.session.get('loginid')
+
+        if not login_id:
+            # If there's no login session, prompt the user to log in
+            return HttpResponse('''<script>alert("Please log in to view rooms");window.location="/login"</script>''')
+
+        try:
+            # Fetch the restaurant (hotel) that corresponds to the logged-in LOGINID
+            restaurant = RestaurantTable.objects.filter(LOGINID=login_id).first()
+            
+            if not restaurant:
+                return HttpResponse('''<script>alert("Hotel not found or you are not authorized to view rooms.");window.location="/login"</script>''')
+
+            # Fetch the rooms that are associated with this hotel/restaurant
+            rooms = RoomTable.objects.filter(LOGINID=login_id)  # Filter by the logged-in hotel's LOGINID
+            
+            if not rooms:
+                return render(request, "ROOM/viewRoom.html", {'message': 'No rooms found for your hotel.'})
+
+            # Return the rooms to the template
+            return render(request, "ROOM/viewRoom.html", {'val': rooms})
+
+        except Exception as e:
+            # Handle any errors that may arise
+            return render(request, "ROOM/viewRoom.html", {'message': f"An error occurred: {str(e)}"})
+        
+    # def get(self, request):
+    #     # Get the room_id from the session
+    #     room_id = request.session.get("room_id")  # or you can get it from the URL using request.GET.get('room_id')
+
+    #     if room_id:
+    #         # Filter the RoomTable by the room_id
+    #         obj = RoomTable.objects.filter(id=room_id)  # Here, `id` is the primary key of RoomTable
+    #     else:
+    #         # If no room_id in session, return an empty queryset or handle the error
+    #         obj = RoomTable.objects.none()  # Empty queryset if no room_id is found
+
+    #     return render(request, "ROOM/viewroom.html", {'val': obj})
+    # def get(self,request):
+    #      obj=RoomTable.objects.all()
+    #      return render(request,"ROOM/viewRoom.html",{'val':obj})
+    # def get(self, request):
+    #     # Get the restaurant_id from the session
+    #     room_id = request.session.get("room_id")
+
+    #     if room_id:
+    #         # Filter the FoodmenuTable by the restaurant_id (using the foreign key relation)
+    #         obj = RoomTable.objects.filter(ROOMID__id=room_id)
+    #     else:
+    #         # If restaurant_id is not available in session, you can return an empty queryset or handle the error
+    #         obj = RoomTable.objects.none()  # Empty queryset if not logged in
+
+    #     return render(request, "ROOM/viewroom.html", {'val': obj})
+
 class roomedit(View):
     def get(self,request,e_id):
         obj = RoomTable.objects.get(id=e_id)
