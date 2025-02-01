@@ -723,11 +723,11 @@ class roombooking(APIView):
 class ViewWalletBalance(APIView):
     def get(self, request, l_id):
         # Find the user by login_id (l_id in your case)
-        user = get_object_or_404(UserTable, LOGINID=l_id)
+        user = UserTable.objects.filter(LOGINID=l_id).first()
         print(user)  # Assuming login_id is unique
         
         # Get the wallet for that user
-        wallet = get_object_or_404(WalletTable, USERID=user)
+        wallet = WalletTable.objects.filter(USERID=user).first()
         print(wallet)
         
         # Serialize the wallet data
@@ -1042,7 +1042,7 @@ class ViewProfileAPIView(APIView):
         except UserTable.DoesNotExist:
             return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
 
-
+from django.db import transaction
 class PlaceFoodOrderView(APIView):
     
 
@@ -1059,65 +1059,53 @@ class PlaceFoodOrderView(APIView):
             # Ensure the user exists
             user = UserTable.objects.get(LOGINID=user_id)
 
-            # Create a new Foodorder for the user with 'pending' status
-            food_order = FoodorderTable.objects.create(
-                USERID=user,
-                status='pending'
-            )
+            # Calculate total order cost
+            total_price = sum(float(item['price']) * int(item['quantity']) for item in menu_items)
+            print(f"Total Order Price: {total_price}")
+            wallet = WalletTable.objects.get(USERID=user)
+            # Check if the user has enough balance
+            if wallet.Balance is None or wallet.Balance < total_price:
+                return Response({"error": "Insufficient wallet balance"}, status=status.HTTP_400_BAD_REQUEST)
 
-            # List to store created order items
-            order_items = []
-            print("hhhhhhhhhhhhh")
-            print("menu_items",menu_items)
-            # Iterate through the list of menu items and create Orderitems for each
-            for item in menu_items:
-                print("item",item)
-                menu_id = item.get('MENUID')
-                print("menu_id",menu_id)
-                quantity = item.get('quantity')
-                print("qwuantity",quantity)
-                food_name = item.get('foodName')
-                print("food_name",food_name)
-                price = item.get('price')
-                print("price",price)
+            # Start a database transaction
+            with transaction.atomic():
+                # Deduct balance from wallet
+                wallet.Balance -= total_price
+                wallet.save()
 
-                # Ensure the menu item exists
-                menu = FoodmenuTable.objects.get(id=menu_id)
-                print("lllll")
-                # # Check if the food name and price match with the menu
-                # if menu.foodName != food_name or menu.price != price:
-                #     return Response({"error": "Food details do not match the menu data"}, status=status.HTTP_400_BAD_REQUEST)
-                # print("hhhhh")
-                # Create an Orderitem for each menu item
-                order_item = OrderitemTable.objects.create(
-                    MENUID=menu,
-                    quantity=quantity,
-                    status='pending'
-                      # Each item starts with 'pending' status
+                # Create the food order
+                food_order = FoodorderTable.objects.create(USERID=user, status='pending')
+
+                # List to store created order items
+                order_items = []
+                for item in menu_items:
+                    menu = FoodmenuTable.objects.get(id=item['MENUID'])
+                    order_item = OrderitemTable.objects.create(
+                        MENUID=menu,
+                        quantity=item['quantity'],
+                        status='pending'
+                    )
+                    order_items.append(order_item)
+
+                # Link order items to the food order
+                food_order.ORDERID.set(order_items)
+                food_order.save()
+
+                # Record transaction in TransactionTable
+                TransactionTable.objects.create(
+                    USERID=user,
+                    amount=total_price,
+                    transactiontype="debit"
                 )
-                print("abcd")
 
-                # Append the order item to the list
-                order_items.append(order_item)
-                print(order_items)
-            # Link all order items to the Foodorder
-            food_order.ORDERID.set(order_items)  # Using `set` to handle a many-to-many relationship
-
-            # Save the food order
-            food_order.save()
-            print("dddddddddd",food_order)
-
-
-
-            return Response(status=status.HTTP_201_CREATED)  # Return the created order
+            return Response({"message": "Order placed successfully"}, status=status.HTTP_201_CREATED)
 
         except UserTable.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        except FoodmenuTable.DoesNotExist:
-            return Response({"error": "Food item not found"}, status=status.HTTP_404_NOT_FOUND)
+        except WalletTable.DoesNotExist:
+            return Response({"error": "Wallet not found"}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
@@ -1130,7 +1118,7 @@ from .serializer import RoomTableSerializer, RestaurantTableSerializer, RentedVe
 
 # Initialize Google Gemini API
 
-
+# genai.configure(api_key="AIzaSyD_7SXRNKBhmeFNWoKL51Lyf_IILLSVJt8")
 
 class ItineraryView(APIView):
     def post(self, request):
@@ -1177,42 +1165,46 @@ class ItineraryView(APIView):
 
         # Construct the prompt using the filtered data (ensure it's only from the models)
         print(user_query,vehicles_list,paid_spots_info,free_spots_list,restaurants_list)
-        prompt =(
-    f"User Query: {user_query}. "
-    f"If the query is a greeting (e.g., 'Hello', 'Hi'), respond with a friendly greeting, such as 'Hello! How can I assist you today?' and do not proceed further. "
-    f"If the query is help-related (e.g., 'help', 'need assistance'), respond with a clear offer to assist, like 'Sure! Let me know how I can help you.' "
-    f"If the query involves travel or booking (e.g., 'Plan a trip', 'Book a vacation'), ask the user: "
-    # f"- 'How much is your budget?' and "
-    # f"- 'What location are you planning to visit?' "
-    f"Then, generate a chatbot-like travel itinerary including: "
-    f"- The available rooms are: {rooms_list}, "
-    f"- The available rented vehicles are: {vehicles_list}, "
-    f"- The free-entry spots are: {free_spots_list}, "
-    f"- The paid spots are: {paid_spots_info}, "
-    f"- The restaurants are: {restaurants_list}. "
-    f"Include only recommendations from the available rooms {rooms_list}, vehicles {vehicles_list}, free spots {free_spots_list}, "
-    f"paid spots {paid_spots_info}, and restaurants {restaurants_list}. "
-    f"Tailor the response based on the user's budget ({user_query} INR) and location if mentioned. "
-    f"If no budget or location is specified, provide general recommendations and suggest contacting the admin for further details. "
-    f"Ensure the tone is conversational and user-friendly, adapting to the query type."
-)
+#         prompt =(
+          
+#     f"User Query: {user_query}."
+#     f"If the query is a greeting (e.g., 'Hello', 'Hi'), respond with a friendly greeting, such as 'Hello! How can I assist you today?' and do not proceed further. "
+#     f"If the query is help-related (e.g., 'help', 'need assistance'), respond with a clear offer to assist, like 'Sure! Let me know how I can help you.' "
+#     f"If the query involves travel or booking (e.g., 'Plan a trip', 'Book a vacation'), ask the user: "
+  
+#     f"If the query involves travel or booking (e.g., 'Plan a trip', 'Book a vacation'), first clarify details by asking the user:\n"
+#     f"'Great! Can you provide details like your preferred budget, location, and any specific interests?'\n\n"
+#     f"Then, generate a chatbot-like travel itinerary including: "
+
+#     f"- The available rooms are: {rooms_list}, "
+#     f"- The available rented vehicles are: {vehicles_list}, "
+#     f"- The free-entry spots are: {free_spots_list}, "
+#     f"- The paid spots are: {paid_spots_info}, "
+#     f"- The restaurants are: {restaurants_list}. 
+   
+#     f"Include only recommendations from the available rooms {rooms_list}, vehicles {vehicles_list}, free spots {free_spots_list}, "
+#     f"paid spots {paid_spots_info}, and restaurants {restaurants_list}. "
+#     f"Tailor the response based on the user's budget ({user_query} INR) and location if mentioned. "
+#     f"If no budget or location is specified, provide general recommendations and suggest contacting the admin for further details. "
+#     f"Ensure the tone is conversational and user-friendly, adapting to the query type."
+# )
     
 
 
-        # prompt = (
-        #     f"User Query: {user_query}. "
-        #     f"If the query is a greeting, just respond with a greeting and do not generate an itinerary. "
-        #     f"If the query is related to travel or booking, generate a chatbot-like itinerary with the following details: "
-        #     f"The available rooms are: {rooms_list}, "
-        #     f"the available rented vehicles are: {vehicles_list}, "
-        #     f"the free-entry spots are: {free_spots_list}, "
-        #     f"the paid spots are: {paid_spots_info}, "
-        #     f"and the restaurants are: {restaurants_list}. "
-        #     f"Include only recommendations from rooms {rooms_list}, vehicles {vehicles_list}, free spots {free_spots_list}, paid spots {paid_spots_info}, and restaurants {restaurants_list}. "
-        #     f"Generate a travel plan based on the budget in {user_query} INR. "
-        #     f"If no data is available for any category, suggest contacting admin. "
-        #     f"Make sure the response is in chatbot-like conversational style."
-        # )
+        prompt = (
+            f"User Query: {user_query}. "
+            f"If the query is a greeting, just respond with a greeting and do not generate an itinerary. "
+            f"If the query is related to travel or booking, generate a chatbot-like itinerary with the following details: "
+            f"The available rooms are: {rooms_list}, "
+            f"the available rented vehicles are: {vehicles_list}, "
+            f"the free-entry spots are: {free_spots_list}, "
+            f"the paid spots are: {paid_spots_info}, "
+            f"and the restaurants are: {restaurants_list}. "
+            f"Include only recommendations from rooms {rooms_list}, vehicles {vehicles_list}, free spots {free_spots_list}, paid spots {paid_spots_info}, and restaurants {restaurants_list}. "
+            f"Generate a travel plan based on the budget in {user_query} INR. "
+            f"If no data is available for any category, suggest contacting admin. "
+            f"Make sure the response is in chatbot-like conversational style."
+        )
 
         try:
             # Call Gemini API to generate the response
@@ -1253,6 +1245,7 @@ class ItineraryView(APIView):
         
         except Exception as e:
             return Response({"error": str(e)}, status=400)
+
 
 
 # import google.generativeai as genai
